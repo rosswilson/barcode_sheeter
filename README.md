@@ -7,10 +7,17 @@ The second script: `generator.rb` takes the generated PNG barcodes and arranges 
 
 This script is under development but forms the basis for an automated barcode label generation feature for [KitScan](https://kitscan.com) - an online asset tracking and management tool.
 
+## Usage
+
+1. Run `bundle install` to install Gem dependencies
+2. Edit `barby.rb` to specify barcode range, prefix, and zero-padding length
+3. Run `ruby barby.rb` to generate PNG barcodes
+4. Run `ruby generator.rb` to generate PDF file: `output.pdf`
+
 ## TODO
 
 - Support multiple pages: use Prawn's `start_new_page` method
 - Pass PNG data blobs straight from Barby to Prawn without having to write and then read from disk
 - Take list of barcodes to generate from STDIN pipe or simple text file (one per line)
 - Introduce template files that contain the page layout measurements, extracting them from the actual .rb file and allowing different sheet label types to be swapped out rapidly.
-- Error checking! And status reporting so calling processes are notified of success/failure 
+- Error checking! And status reporting so calling processes are notified of success/failure
