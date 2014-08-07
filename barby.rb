@@ -5,7 +5,7 @@ require 'barby/outputter/png_outputter'
 DIGIT_PADDING = 5
 PREFIX = "SU"
 
-(1..10).each do |i|
+(693..852).each do |i|
   code = PREFIX + i.to_s.rjust(DIGIT_PADDING, "0")
 
   puts "Generating: #{code}"

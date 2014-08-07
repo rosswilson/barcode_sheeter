@@ -22,8 +22,8 @@ Prawn::Document.generate("output.pdf", page_size: "LETTER", margin: 0, info: met
 
   # USER EDITABLE START
 
-  x_cursor = 0.25.in
-  y_cursor = 10.in
+  x_cursor = 0.2.in
+  y_cursor = 10.05.in
 
   x_interval = 1.in
   y_interval = 2.25.in
@@ -31,13 +31,15 @@ Prawn::Document.generate("output.pdf", page_size: "LETTER", margin: 0, info: met
   x_label_max = 8
   y_label_max = 4
 
-  label_width = 1.in
-  label_height = 0.75.in
+  label_width = 1.01.in
+  label_height = 0.77.in
 
-  barcode_width = 0.9.in
-  barcode_height = 0.65.in
+  barcode_width = 0.8.in
+  barcode_height = 0.55.in
 
   # USER EDITABLE END
+
+  page_count = 0
 
   x_label_count = 1
   y_label_count = 1
@@ -46,17 +48,20 @@ Prawn::Document.generate("output.pdf", page_size: "LETTER", margin: 0, info: met
 
   barcode_pngs.each do |barcode_path|
     image_side_margin = (label_width - barcode_width) / 2
-    # image_width = (image_side_margin * 2) + barcode_width
-
-    image_top_bottom_margin = (label_height - barcode_height) / 2
-    # image_height = (image_top_bottom_margin * 2) + barcode_height
+    image_top_bottom_margin = 0
 
     image barcode_path, at: [x_cursor + image_side_margin, y_cursor - image_top_bottom_margin],
       width: barcode_width, height: barcode_height
 
+    # Insert a text label of the barcode number for manual entry
+    text = File.basename(barcode_path, ".png").to_s.gsub("barcode_", "")
+    draw_text text.to_s, at: [x_cursor + image_side_margin + 0.05.in, y_cursor - barcode_height - image_top_bottom_margin - 0.16.in]
+
     # Move onto next label
     x_label_count += 1
     x_cursor += x_interval
+
+    page_count += 1
 
     # If we're at maximum across X axis, reset to left-hand side and move down
     if x_label_count > x_label_max
@@ -64,6 +69,13 @@ Prawn::Document.generate("output.pdf", page_size: "LETTER", margin: 0, info: met
       x_cursor = x_margin
 
       y_cursor -= y_interval
+
+      if page_count == x_label_max * y_label_max
+        page_count = 0
+
+        start_new_page
+        y_cursor = 10.05.in
+      end
     end
   end
 end

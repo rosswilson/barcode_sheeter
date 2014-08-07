@@ -16,7 +16,7 @@ This script is under development but forms the basis for an automated barcode la
 
 ## TODO
 
-- Support multiple pages: use Prawn's `start_new_page` method
+- ~~Support multiple pages: use Prawn's `start_new_page` method~~ Done, 06/08/14 by @rosswilson
 - Pass PNG data blobs straight from Barby to Prawn without having to write and then read from disk
 - Take list of barcodes to generate from STDIN pipe or simple text file (one per line)
 - Introduce template files that contain the page layout measurements, extracting them from the actual .rb file and allowing different sheet label types to be swapped out rapidly.
